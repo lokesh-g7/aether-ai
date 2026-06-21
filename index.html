@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AetherAI — Premium Intelligent Chatbot</title>
+    <!-- Google Fonts: Outfit, Inter & Fira Code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Auth Portal Cover -->
+    <div class="auth-portal" id="auth-portal">
+        <div class="auth-card" id="auth-card-main">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h2 class="auth-title">Welcome to AetherAI</h2>
+                <p class="auth-subtitle">Sign in to sync your chats, memory and settings across devices.</p>
+            </div>
+            
+            <div class="auth-body">
+                <!-- Error Banner -->
+                <div class="auth-error hidden" id="auth-error-banner"></div>
+                
+                <form id="auth-form" onsubmit="return false;">
+                    <div class="form-group" id="signup-name-group">
+                        <label for="auth-name">Full Name</label>
+                        <input type="text" id="auth-name" placeholder="Lokesh G">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="auth-email">Email address</label>
+                        <input type="email" id="auth-email" placeholder="example@gmail.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="auth-password">Password</label>
+                        <input type="password" id="auth-password" placeholder="••••••••" required>
+                    </div>
+                    
+                    <button class="btn btn-primary auth-submit-btn" id="auth-submit-btn" type="submit">Continue</button>
+                </form>
+                
+                <div class="auth-divider">
+                    <span>OR</span>
+                </div>
+                
+                <button class="google-login-btn" id="google-login-trigger">
+                    <svg viewBox="0 0 24 24" class="google-icon">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 6.3l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    <span>Continue with Google</span>
+                </button>
+            </div>
+            
+            <div class="auth-footer">
+                <span id="auth-toggle-msg">Don't have an account?</span>
+                <button class="link-btn" id="auth-toggle-btn">Sign up</button>
+            </div>
+        </div>
+
+        <!-- Google Accounts Chooser Overlay (Prompted on Google sign-in click) -->
+        <div class="google-chooser-overlay hidden" id="google-chooser">
+            <div class="google-chooser-card">
+                <div class="google-chooser-header">
+                    <svg viewBox="0 0 24 24" width="24" height="24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 6.3l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    <h4>Choose an account</h4>
+                    <p>to continue to AetherAI</p>
+                </div>
+                
+                <div class="google-accounts-list">
+                    <div class="google-account-item" data-email="2007to2024loki.g@gmail.com" data-name="Lokesh G">
+                        <div class="google-avatar red">LG</div>
+                        <div class="google-acc-info">
+                            <span class="acc-name">Lokesh G</span>
+                            <span class="acc-email">2007to2024loki.g@gmail.com</span>
+                        </div>
+                    </div>
+                    <div class="google-account-item" data-email="example@gmail.com" data-name="Demo Guest">
+                        <div class="google-avatar blue">DG</div>
+                        <div class="google-acc-info">
+                            <span class="acc-name">Demo Guest</span>
+                            <span class="acc-email">example@gmail.com</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-secondary google-cancel-btn" id="google-chooser-cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core App Container -->
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-area">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <span class="logo-text">AetherAI</span>
+                </div>
+                
+                <button class="new-chat-btn" id="new-chat-btn" title="Start a new chat">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    <span>New Chat</span>
+                </button>
+                
+                <!-- Search Chats Input -->
+                <div class="search-chats-container">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="search-icon">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" id="search-chats-input" placeholder="Search chats...">
+                </div>
+
+                <!-- Collapsible Projects Panel -->
+                <div class="projects-sidebar-section">
+                    <div class="projects-sidebar-header" id="projects-toggle-header">
+                        <span class="section-title-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="section-icon">
+                                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                            <span>Projects</span>
+                        </span>
+                        <button class="add-project-mini-btn" id="add-project-trigger" title="Create a Project">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="projects-list-collapsed" id="sidebar-projects-list">
+                        <!-- Dynamic list of projects -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- History List (Pinned & Recents) -->
+            <div class="sidebar-history">
+                <!-- Pinned Chats Section -->
+                <div class="history-section" id="pinned-chats-section">
+                    <div class="history-label">Pinned</div>
+                    <div class="chat-list" id="pinned-chat-list">
+                        <!-- Dynamic pinned chats populate here -->
+                    </div>
+                </div>
+                
+                <!-- Recent Chats Section -->
+                <div class="history-section" id="recent-chats-section">
+                    <div class="history-label">Recents</div>
+                    <div class="chat-list" id="chat-list">
+                        <!-- Dynamic recent chats populate here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar Footer Profile Widget -->
+            <div class="sidebar-footer">
+                <div class="profile-widget" id="profile-widget-trigger">
+                    <div class="profile-avatar-circle" id="profile-avatar-display">LG</div>
+                    <div class="profile-details-wrapper">
+                        <span class="profile-widget-name" id="profile-widget-name">Lokesh G</span>
+                        <span class="profile-widget-email" id="profile-widget-email">your@email.com</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Floating Profile Popup Menu (matches Image 2) -->
+        <div class="profile-popup-menu hidden" id="profile-popup-menu">
+            <div class="popup-item" id="popup-personalization">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span>Personalization</span>
+            </div>
+            <div class="popup-item" id="popup-profile">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <span>Profile</span>
+            </div>
+            <div class="popup-item" id="popup-settings">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                </svg>
+                <span>Settings</span>
+            </div>
+            <div class="popup-divider"></div>
+            <div class="popup-item" id="popup-help">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                <span>Help out</span>
+            </div>
+            <div class="popup-item logout" id="popup-logout">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                <span>Log out</span>
+            </div>
+        </div>
+
+        <!-- Sidebar Overlay (mobile only) -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+        <!-- Main Chat Area -->
+        <main class="chat-container">
+            <!-- Header -->
+            <header class="chat-header">
+                <div class="header-left">
+                    <button class="sidebar-toggle" id="sidebar-toggle" title="Toggle Sidebar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                    <div class="chat-title-info">
+                        <h1 class="chat-title" id="chat-title-text">New Conversation</h1>
+                        <!-- Active Project Indicator Badge -->
+                        <span class="project-indicator-badge hidden" id="active-project-badge">Project Mode</span>
+                        <span class="model-badge" id="current-model-badge">Gemini Sandbox</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="clear-chat-btn" id="clear-chat-btn" title="Clear Chat Messages">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Chat Content -->
+            <div class="chat-messages-viewport" id="chat-viewport">
+                <!-- Welcome Screen -->
+                <div class="welcome-screen" id="welcome-screen">
+                    <div class="welcome-header">
+                        <div class="welcome-logo">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h2 class="welcome-title" id="welcome-header-title">How can I assist you today?</h2>
+                        <p class="welcome-subtitle" id="welcome-header-desc">AetherAI combines modern aesthetics with Gemini LLM's power. Start with an idea below or write your own.</p>
+                    </div>
+
+                    <div class="suggestions-grid">
+                        <div class="suggestion-card" data-prompt="Explain quantum computing in simple terms for a child.">
+                            <div class="card-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                </svg>
+                            </div>
+                            <div class="card-title">Explain Quantum Computing</div>
+                            <div class="card-desc">Break down physics in plain words</div>
+                        </div>
+
+                        <div class="suggestion-card" data-prompt="Write a modern, fully styled responsive JavaScript counter application. Provide CSS and HTML.">
+                            <div class="card-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="16 18 22 12 16 6"></polyline>
+                                    <polyline points="8 6 2 12 8 18"></polyline>
+                                </svg>
+                            </div>
+                            <div class="card-title">Write App Code</div>
+                            <div class="card-desc">Generate interactive HTML/JS examples</div>
+                        </div>
+
+                        <div class="suggestion-card" data-prompt="Draft a polite email to a project manager requesting a two-day extension for the layout deliverables.">
+                            <div class="card-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                            </div>
+                            <div class="card-title">Draft Professional Email</div>
+                            <div class="card-desc">Write quick templates & polite emails</div>
+                        </div>
+
+                        <div class="suggestion-card" data-prompt="Create a high-protein 3-day meal prep schedule with clean instructions and ingredients list formatted in a table.">
+                            <div class="card-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                </svg>
+                            </div>
+                            <div class="card-title">Design a Weekly Plan</div>
+                            <div class="card-desc">Healthy meal plans, routines, or schedules</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Messages Container -->
+                <div class="messages-list" id="messages-list">
+                    <!-- Dynamic message items will populate here -->
+                </div>
+            </div>
+
+            <footer class="chat-input-area">
+                <div class="input-warning-banner hidden" id="api-warning-banner">
+                    <span>💡 Running in Offline Sandbox. <button class="link-btn" id="banner-settings-trigger">Enter Gemini API Key</button> to unlock live responses.</span>
+                </div>
+
+                <!-- Attached Files Previews -->
+                <div class="attachment-preview-container hidden" id="attachment-preview-area"></div>
+
+                <div class="input-box-wrapper">
+                    <button class="action-btn" id="attach-btn" title="Attach files/images">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" style="transform: rotate(45deg);">
+                            <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
+                        </svg>
+                    </button>
+                    <input type="file" id="file-input" multiple accept="image/*,.txt,.pdf,.js,.py,.html,.css,.json,.md" style="display: none;">
+
+                    <textarea 
+                        id="chat-input" 
+                        rows="1" 
+                        placeholder="Message AetherAI..." 
+                        autocomplete="off"
+                        autofocus
+                    ></textarea>
+                    
+                    <div class="input-actions">
+                        <button class="action-btn" id="voice-btn" title="Simulated Voice Input">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 1v10M19 8a7 7 0 0 1-14 0M12 21v-3"></path>
+                            </svg>
+                        </button>
+                        <button class="send-btn" id="send-btn" title="Send Message" disabled>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="disclaimer-text">
+                    AetherAI can make mistakes. Verify important details. Gemini API keys are processed strictly client-side.
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Unified ChatGPT Settings & Configuration Modal (Matches screenshots) -->
+    <div class="modal-overlay" id="settings-modal">
+        <div class="settings-modal-card">
+            <!-- Left Navigation Menu -->
+            <div class="settings-modal-sidebar">
+                <button class="settings-tab-link active" data-tab="tab-general">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    <span>General</span>
+                </button>
+                <button class="settings-tab-link placeholder" data-tab="tab-notifications">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <span>Notifications</span>
+                </button>
+                <button class="settings-tab-link" data-tab="tab-personalization">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    <span>Personalization</span>
+                </button>
+                <button class="settings-tab-link placeholder" data-tab="tab-apps">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                    <span>Apps</span>
+                </button>
+                <button class="settings-tab-link placeholder" data-tab="tab-billing">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                    <span>Billing</span>
+                </button>
+                <button class="settings-tab-link" data-tab="tab-datacontrols">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                    <span>Data controls</span>
+                </button>
+                <button class="settings-tab-link placeholder" data-tab="tab-storage">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                    <span>Storage</span>
+                </button>
+                <button class="settings-tab-link placeholder" data-tab="tab-security">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <span>Security</span>
+                </button>
+                <button class="settings-tab-link placeholder" data-tab="tab-parental">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    <span>Parental controls</span>
+                </button>
+                <button class="settings-tab-link placeholder" data-tab="tab-trusted">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    <span>Trusted contact</span>
+                </button>
+                <button class="settings-tab-link" data-tab="tab-account">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"></circle><path d="M12 14c-4.42 0-8 3.58-8 8h16c0-4.42-3.58-8-8-8z"></path></svg>
+                    <span>Account</span>
+                </button>
+                <button class="settings-tab-link placeholder" data-tab="tab-keyboard">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6" y2="8"></line><line x1="10" y1="8" x2="10" y2="8"></line><line x1="14" y1="8" x2="14" y2="8"></line><line x1="18" y1="8" x2="18" y2="8"></line><line x1="6" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="18" y2="12"></line><line x1="7" y1="16" x2="17" y2="16"></line></svg>
+                    <span>Keyboard</span>
+                </button>
+            </div>
+
+            <!-- Right Content Panel -->
+            <div class="settings-modal-content">
+                <button class="settings-modal-close" id="settings-modal-close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+
+                <!-- General Tab (Theme, Models, LLM Settings) -->
+                <div class="settings-tab-panel" id="tab-general">
+                    <h3 class="panel-heading">General Settings</h3>
+                    
+                    <div class="form-group">
+                        <label>Theme</label>
+                        <select id="general-theme-select">
+                            <option value="dark">Dark Theme (Standard)</option>
+                            <option value="light">Light Theme (Clean)</option>
+                        </select>
+                        <span class="field-info">Switch between light and dark backgrounds.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gemini API Token</label>
+                        <div class="input-password-wrapper">
+                            <input type="password" id="general-api-key" placeholder="AIzaSy...">
+                            <button class="password-toggle-btn" id="general-pwd-toggle">
+                                <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                                <svg class="eye-closed hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                                </svg>
+                            </button>
+                        </div>
+                        <span class="field-info">Stored client-side. Get yours from <a href="https://aistudio.google.com/" target="_blank">Google AI Studio</a>.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>AI Model</label>
+                        <select id="general-model-select">
+                            <option value="gemini-2.5-flash-preview-05-20">Gemini 2.5 Flash Preview (Recommended)</option>
+                            <option value="gemini-2.5-flash">Gemini 2.5 Flash (Stable)</option>
+                            <option value="gemini-2.5-pro-preview-06-05">Gemini 2.5 Pro Preview (Advanced)</option>
+                            <option value="gemini-2.0-flash">Gemini 2.0 Flash (Fast)</option>
+                            <option value="gemini-2.0-flash-lite">Gemini 2.0 Flash Lite (Lightweight)</option>
+                            <option value="gemini-1.5-flash">Gemini 1.5 Flash (Legacy)</option>
+                            <option value="gemini-1.5-pro">Gemini 1.5 Pro (Legacy Pro)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Creativity (Temperature: <span id="general-temp-val">0.7</span>)</label>
+                        <input type="range" id="general-temp-slider" min="0" max="2" step="0.1" value="0.7">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Default System Instruction</label>
+                        <textarea id="general-system-prompt" rows="3" placeholder="You are a helpful coding assistant..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Personalization Tab (Matches image 3 & 4) -->
+                <div class="settings-tab-panel hidden" id="tab-personalization">
+                    <h3 class="panel-heading">Personalization</h3>
+                    <p class="panel-desc">Customize how AetherAI responds to you based on your occupation and style preferences.</p>
+
+                    <div class="form-group">
+                        <label for="personal-tone-dropdown">Base style and tone</label>
+                        <select id="personal-tone-dropdown">
+                            <option value="Default">Default (Preset style and tone)</option>
+                            <option value="Professional">Professional (Polished and precise)</option>
+                            <option value="Friendly">Friendly (Warm and chatty)</option>
+                            <option value="Candid">Candid (Direct and encouraging)</option>
+                            <option value="Quirky">Quirky (Playful and imaginative)</option>
+                            <option value="Efficient">Efficient (Concise and plain)</option>
+                            <option value="Cynical">Cynical (Critical and sarcastic)</option>
+                        </select>
+                        <span class="field-info">Set the style of how AetherAI responds. This does not impact reasoning capabilities.</span>
+                    </div>
+
+                    <h4 class="settings-subheading">Characteristics</h4>
+                    
+                    <div class="form-group">
+                        <label for="personal-name">What should AetherAI call you?</label>
+                        <input type="text" id="personal-name" placeholder="Name or nickname">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="personal-occupation">Occupation</label>
+                        <input type="text" id="personal-occupation" placeholder="e.g. Freelance copywriter, Developer">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="personal-interests">More about you</label>
+                        <textarea id="personal-interests" rows="3" placeholder="Interests, values, or preferences to keep in mind"></textarea>
+                    </div>
+
+                    <h4 class="settings-subheading">Memory Controls</h4>
+
+                    <div class="checkbox-row">
+                        <div class="checkbox-details">
+                            <span class="checkbox-title">Reference saved memories</span>
+                            <span class="checkbox-desc">Let AetherAI save and use memories when responding.</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="personal-memory-toggle" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="checkbox-row">
+                        <div class="checkbox-details">
+                            <span class="checkbox-title">Reference chat history</span>
+                            <span class="checkbox-desc">Let AetherAI reference recent conversations when responding.</span>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="personal-history-toggle" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label for="personal-instructions">Custom instructions</label>
+                        <textarea id="personal-instructions" rows="2" placeholder="Give all answers with romantic touch and a fluttering tone."></textarea>
+                    </div>
+                </div>
+
+                <!-- Account Tab (Matches image 1 reference) -->
+                <div class="settings-tab-panel hidden" id="tab-account">
+                    <h3 class="panel-heading">Account details</h3>
+                    
+                    <div class="account-details-grid">
+                        <div class="detail-row">
+                            <span class="detail-label">Name</span>
+                            <span class="detail-value" id="account-detail-name">Lokesh G</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Email</span>
+                            <span class="detail-value" id="account-detail-email">2007to2024loki.g@gmail.com</span>
+                        </div>
+                        <div class="detail-row delete-row">
+                            <span class="detail-label">Delete account</span>
+                            <button class="danger-btn-small" id="account-delete-trigger">Delete</button>
+                        </div>
+                    </div>
+
+                    <h4 class="settings-subheading">GPT builder profile</h4>
+                    <p class="panel-desc" style="margin-bottom: 15px;">Personalise your builder profile to connect with users of your GPTs.</p>
+                    
+                    <!-- GPT Builder Preview Box -->
+                    <div class="gpt-builder-card">
+                        <div class="builder-preview-label">Preview</div>
+                        <div class="builder-logo-circle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <circle cx="12" cy="12" r="4"></circle>
+                            </svg>
+                        </div>
+                        <span class="builder-card-title">PlaceholderGPT</span>
+                        <span class="builder-card-author">By community builder</span>
+                    </div>
+                    
+                    <div class="info-alert-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        <span>Complete verification to publish GPTs to everyone. Verify your identity by adding billing details or verifying ownership of a public domain name.</span>
+                    </div>
+                </div>
+
+                <!-- Data Controls Tab -->
+                <div class="settings-tab-panel hidden" id="tab-datacontrols">
+                    <h3 class="panel-heading">Data controls</h3>
+                    
+                    <div class="form-group">
+                        <label>Export data</label>
+                        <button class="btn btn-secondary" id="export-data-btn">Request data export</button>
+                        <span class="field-info">Request a downloadable archive containing all your chats, custom instructions, and project context files.</span>
+                    </div>
+
+                    <div class="danger-zone" style="margin-top:20px;">
+                        <h4 class="danger-title">Wipe Chats History</h4>
+                        <button class="danger-btn" id="wipe-chats-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            Delete All Conversations
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Placeholders (Notifications, Apps, Billing, Storage, Security, Parental, Trusted, Keyboard) -->
+                <div class="settings-tab-panel hidden" id="tab-placeholder">
+                    <h3 class="panel-heading" id="placeholder-panel-title">Notifications</h3>
+                    <p class="panel-desc">This configuration tab is a mock placeholder. Feature updates are scheduled for the next major release.</p>
+                    <div class="placeholder-visual-box">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="48" height="48">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="16"></line>
+                            <line x1="8" y1="12" x2="16" y2="12"></line>
+                        </svg>
+                        <span>Feature Coming Soon</span>
+                    </div>
+                </div>
+
+                <!-- Modal Action buttons (Save/Cancel) -->
+                <div class="settings-modal-footer">
+                    <button class="btn btn-secondary" id="settings-cancel">Cancel</button>
+                    <button class="btn btn-primary" id="settings-save">Save Settings</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Dialog (Matches Image 5) -->
+    <div class="modal-overlay" id="profile-edit-modal">
+        <div class="profile-modal-card">
+            <div class="profile-modal-header">
+                <h3 class="profile-modal-title">Edit profile</h3>
+            </div>
+            
+            <div class="profile-modal-body">
+                <div class="profile-avatar-editor">
+                    <div class="profile-avatar-large" id="profile-edit-avatar-large">LG</div>
+                    <div class="camera-badge" title="Change profile photo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                            <circle cx="12" cy="13" r="4"></circle>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="profile-edit-display-name">Display name</label>
+                    <input type="text" id="profile-edit-display-name" value="Lokesh G" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="profile-edit-email">Username</label>
+                    <input type="email" id="profile-edit-email" value="2007to2024loki.g@gmail.com" required>
+                </div>
+                
+                <p class="profile-modal-info">Your profile helps people recognize you in group chats.</p>
+            </div>
+
+            <div class="profile-modal-footer">
+                <button class="btn btn-secondary" id="profile-edit-cancel">Cancel</button>
+                <button class="btn btn-primary" id="profile-edit-save">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Project Modal (matches prompt description) -->
+    <div class="modal-overlay" id="project-create-modal">
+        <div class="project-modal-card">
+            <div class="project-modal-header">
+                <h3 class="project-modal-title">Create a Project Workspace</h3>
+                <button class="modal-close-btn" id="project-modal-close-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="project-modal-body">
+                <div class="form-group">
+                    <label for="project-title-input">Project Name</label>
+                    <input type="text" id="project-title-input" placeholder="e.g. Code Review, Translation, Novel Draft" required>
+                </div>
+                <div class="form-group">
+                    <label for="project-desc-input">Description</label>
+                    <input type="text" id="project-desc-input" placeholder="What is this project workspace about?">
+                </div>
+                <div class="form-group">
+                    <label for="project-instructions-input">Project Instructions (Context)</label>
+                    <textarea id="project-instructions-input" rows="4" placeholder="Enter instructions that AetherAI should follow for all chats within this project..."></textarea>
+                    <span class="field-info">This context is automatically appended to your chats to keep the LLM focused on your goals.</span>
+                </div>
+            </div>
+
+            <div class="project-modal-footer">
+                <button class="btn btn-secondary" id="project-modal-cancel">Cancel</button>
+                <button class="btn btn-primary" id="project-modal-save">Create Project</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Logic Script -->
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "name": "aether-ai-chatbot",
+  "version": "1.0.0",
+  "description": "A premium, light and dark themed ChatGPT-style chatbot interface integrated with the Gemini API.",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "chatbot",
+    "gemini-api",
+    "chatgpt-ui",
+    "glassmorphism",
+    "light-dark-theme"
+  ],
+  "author": "AetherAI Team",
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^5.2.0"
+  }
+}
